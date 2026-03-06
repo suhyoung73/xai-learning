@@ -1,0 +1,19 @@
+{
+  "name": "XAI 학습 랩",
+  "short_name": "XAI Lab",
+  "description": "고등학교 인공지능 기초 수업을 위한 인터랙티브 학습 환경",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0a0e17",
+  "background_color": "#0a0e17",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0e17' width='100' height='100' rx='20'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%236366f1'>⚡</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

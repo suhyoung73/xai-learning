@@ -1,0 +1,217 @@
+﻿차시,셀,파이썬 코드,의사코드,비고
+3,1,"data = pd.read_csv(""/content/meat.csv"")","데이터 불러오기
+· meat.csv 파일에서 읽어온 값을 data라는 변수에 저장함","라이브러리에 대한 설명은 모두 생략함.
+meat.csv 파일은 다음 링크에서 다운로드 가능함.
+https://docs.google.com/document/d/1Hr5DRhB0w5Of4pERi8OOB_DEe-Ih6kFtiI9v9TP8lGo/edit?usp=drive_link"
+3,2,"x_col = ""소고기 가격""
+y_col = ""돼지고기 가격""
+
+input = data[[x_col]].values
+output = data[y_col].values","열 선택하기
+· 그래프의 x축으로 지정할 열 이름(x_col) = 소고기 가격 
+· 그래프의 y축으로 지정할 열 이름(y_col) = 돼지고기 가격 
+· 입력값(input) = data에서 x축에 해당하는 열에 저장된 값
+· 출력값(output) = data에서 y축에 해당하는 열에 저장된 값",
+3,3,"plt.figure(figsize=(6,6))
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+
+plt.scatter(input, output, alpha=0.6, label=""데이터"")
+plt.legend()
+plt.grid(True)
+plt.show()","데이터 시각화하기
+· 산점도(scatter) = 입력값과 출력값의 쌍으로 이루어진 모든 데이터(input, output)를 점으로 나타냄",
+3,4,"i_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.2, random_state=42)","훈련 데이터와 테스트 데이터 분리하기
+· 훈련 데이터(input, output) = (i_train , o_train) (80%)
+· 테스트 데이터(input, output) = (i_test , o_test) (20%)",
+3,5,"model_a = LinearRegression()
+model_a.fit(i_train, o_train)","모델 학습시키기
+· 모델 이름 = model_a 
+· 모델 종류 = 선형 회귀(Linear Regression) 
+· 모델을 학습(fit)시킬 데이터 = (i_train, o_train) ",
+3,6,"x_grid = np.linspace(input.min(), input.max(), 100).reshape(-1, 1)
+y_line = model_a.predict(x_grid)
+
+plt.figure(figsize=(6,6))
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+
+plt.scatter(i_train, o_train, alpha=0.6, label=""훈련 데이터"")
+plt.plot(x_grid, model_a.predict(x_grid), label=""회귀 모델"")
+plt.legend()
+plt.grid(True)
+plt.show()","훈련 데이터와 모델 시각화하기
+· 산점도(scatter) = 입력값과 출력값의 쌍으로 이루어진 훈련 데이터(i_train, o_train)를 점으로 나타냄
+· 회귀선(plot) = 모델이 데이터를 학습해서 예측한 값들을 선으로 연결한 그래프",
+3,7,"plt.figure(figsize=(6,6))
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+
+plt.scatter(i_train, o_train, alpha=0.6, label=""훈련 데이터"")
+plt.scatter(i_test, o_test, alpha=0.8, label=""테스트 데이터"")
+plt.plot(x_grid, y_line, label=""회귀 모델"")
+plt.legend()
+plt.grid(True)
+plt.show()","테스트 데이터와 모델 시각화하기
+· 산점도(scatter) = 훈련 데이터(i_train, o_train)를 파란색 점, 테스트 데이터(i_test, o_test)를 주황색 점으로 나타냄
+· 회귀선(plot) = 모델이 데이터를 학습해서 예측한 값들을 선으로 연결한 그래프",
+3,8,"y_pred = model_a.predict(i_test)
+df = pd.DataFrame({'입력값': i_test.flatten(), '실제 출력값': o_test, '예측값': y_pred.flatten()})
+df","모델로 데이터 예측하기
+· 테스트 데이터에 대한 모델의 예측값을 y_pred라는 변수에 저장함
+· 테스트 데이터의 입력값(i_test), 실제 출력값(o_test), 모델의 예측값(y_pred)을 표로 나타냄",
+3,9,"print(f""[선형 회귀 모델]\nx축 : {x_col} \ny축 : {y_col}\n"")
+print(f""w(가중치, 기울기): {model_a.coef_[0]:.2f}"")
+print(f""b(편향, 절편): {model_a.intercept_:.2f}"")
+print(f""score(설명력) : {model_a.score(i_test, o_test)*100:.2f}%"")","모델 성능 평가하기
+· 가중치, 기울기(weight) = 회귀선의 기울기, 입력값과 출력값이 영향을 미치는 정도
+· 편향, 절편(bias) = 회귀선의 y절편
+· 설명력(score) = 모델이 테스트 데이터의 출력값 변화를 얼마나 잘 설명하는지 나타내는 값(1에 가까울수록 정확함)",
+3,10,"소고기 = 10800 # @param {""type"":""slider"",""min"":2000,""max"":12000,""step"":200}
+돼지고기 = model_a.predict(np.array(소고기).reshape(-1, 1))
+print(f""소고기 가격이 {소고기}원일 때, 돼지고기 가격은 {돼지고기[0]:.0f}원일 것으로 예측됩니다."")
+print(f""예측한 이유를 학습지에 작성해보세요."")","예측하고 설명하기
+· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.
+· 예측한 이유를 학습지(외부)에 작성해보자.",
+4,1,"data = pd.read_csv(""/content/star.csv"")","데이터 불러오기
+· star.csv 파일에서 읽어온 값을 data라는 변수에 저장함","라이브러리에 대한 설명은 모두 생략함.
+star.csv 파일은 다음 링크에서 다운로드 가능함.
+https://drive.google.com/file/d/1kRaovl0zo5e9U9FKUEm6HxGOfiUz1Mwv/view?usp=sharing"
+4,2,"x_col = ""온도(K)""
+y_col = ""절대등급(Mv)""
+t_col = ""별 종류""
+
+input = data[[x_col, y_col]].to_numpy().astype(float)
+output = data[t_col].astype(str).to_numpy()","열 선택하기
+· 그래프의 x축으로 지정할 열 이름(x_col) = 온도(K) 
+· 그래프의 y축으로 지정할 열 이름(y_col) = 절대등급(Mv) 
+· 그래프에서 색상으로 구분할 열 이름(t_col) = 별 종류 
+· 입력값(input) = data에서 x, y축에 해당하는 열에 저장된 값(values)
+· 출력값(output) = data에서 색상으로 표시되는 값(values)",
+4,3,"type_names = np.unique(output)
+colors = plt.cm.tab10(np.linspace(0, 1, len(type_names)))
+cmap = ListedColormap(colors)
+
+plt.figure(figsize=(6,6))
+
+for i, cls in enumerate(type_names):
+    m = (output == cls)
+    plt.scatter(input[m,0], input[m,1],
+                s=36, color=colors[i],
+                edgecolor='k', linewidth=0.3,
+                label=str(cls), alpha=0.95)
+
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+
+ax = plt.gca()
+ax.invert_xaxis()
+ax.invert_yaxis()
+
+plt.legend()
+plt.grid(True)
+plt.show()","데이터 시각화하기
+· 출력값(output)에 들어 있는 별의 종류 목록(type_names)을 만들고 종류별 색상(colors)을 지정함
+· 산점도(scatter) = 별의 종류별로 데이터를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타냄
+· H-R도와 유사하게 x축과 y축을 반대로 표시함",
+4,4,"i_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.3, random_state=42)","훈련 데이터와 테스트 데이터 분리하기
+· 훈련 데이터(input, output) = (i_train , o_train) (70%)
+· 테스트 데이터(input, output) = (i_test , o_test) (30%)",
+4,5,"model_b = make_pipeline(StandardScaler(),
+                        SVC(kernel=""rbf"", gamma=""scale"", C=2.0, random_state=42))
+model_b.fit(i_train, o_train)","모델 학습시키기
+· 모델 이름 = model_b 
+· 모델 종류 = 서포트 벡터 머신(Support Vector Machine) 
+· 모델을 학습(fit)시킬 데이터 = (i_train, o_train)",
+4,6,"pad_x = (input[:,0].max() - input[:,0].min()) * 0.05
+pad_y = (input[:,1].max() - input[:,1].min()) * 0.05
+x_min, x_max = input[:,0].min() - pad_x, input[:,0].max() + pad_x
+y_min, y_max = input[:,1].min() - pad_y, input[:,1].max() + pad_y
+xx, yy = np.meshgrid(np.linspace(x_min, x_max, 500),
+                     np.linspace(y_min, y_max, 500))
+grid = np.c_[xx.ravel(), yy.ravel()]
+zz = model_b.predict(grid).reshape(xx.shape)
+
+label_map = {label: i for i, label in enumerate(type_names)}
+zz_int = np.array([label_map[label] for label in zz.ravel()]).reshape(xx.shape)
+
+plt.figure(figsize=(6,6))
+plt.contourf(xx, yy, zz_int, levels=len(type_names), alpha=0.20, cmap=cmap)
+
+for i, cls in enumerate(type_names):
+    m_train = (o_train == cls)
+    plt.scatter(i_train[m_train, 0], i_train[m_train, 1],
+                s=36, color=colors[i],
+                edgecolor='k', linewidth=0.3,
+                label=cls, alpha=0.9)
+
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+
+ax = plt.gca()
+ax.invert_xaxis()
+ax.invert_yaxis()
+
+plt.legend()
+plt.grid(True)
+plt.show()","훈련 데이터와 모델 시각화하기
+· 좌표평면의 범위(min, max)를 정해서 격자(meshgrid)로 만듦
+· 산점도(scatter) = 별 종류별로 훈련 데이터를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타냄
+· 분류영역(countourf) = 분류 모델이 이루는 결정 영역을 색상으로 나타냄",
+4,7,"pad_x = (input[:,0].max() - input[:,0].min()) * 0.05
+pad_y = (input[:,1].max() - input[:,1].min()) * 0.05
+x_min, x_max = input[:,0].min() - pad_x, input[:,0].max() + pad_x
+y_min, y_max = input[:,1].min() - pad_y, input[:,1].max() + pad_y
+
+xx, yy = np.meshgrid(np.linspace(x_min, x_max, 500),
+                     np.linspace(y_min, y_max, 500))
+grid = np.c_[xx.ravel(), yy.ravel()]
+zz = model_b.predict(grid).reshape(xx.shape)
+
+label_map = {label: i for i, label in enumerate(type_names)}
+zz_int = np.array([label_map[label] for label in zz.ravel()]).reshape(xx.shape)
+
+plt.figure(figsize=(6,6))
+plt.contourf(xx, yy, zz_int, levels=len(type_names), alpha=0.20, cmap=cmap)
+
+# 훈련 데이터
+for i, cls in enumerate(type_names):
+    m_train = (o_train == cls)
+    plt.scatter(i_train[m_train, 0], i_train[m_train, 1],
+                s=36, color=colors[i],
+                edgecolor='k', linewidth=0.3,
+                label=f""훈련: {cls}"", alpha=0.9)
+
+# 테스트 데이터
+y_pred = model_b.predict(i_test)
+for i, cls in enumerate(type_names):
+    m_pred = (y_pred == cls)
+    plt.scatter(i_test[m_pred, 0], i_test[m_pred, 1],
+                s=36, color=colors[i],
+                edgecolor='red', linewidth=1.2,
+                label=f""테스트: {cls}"", alpha=0.95)
+
+plt.xlabel(x_col)
+plt.ylabel(y_col)
+ax = plt.gca()
+ax.invert_xaxis()
+ax.invert_yaxis()
+
+plt.legend()
+plt.grid(True)
+plt.show()","테스트 데이터와 모델 시각화하기
+· 산점도(scatter) = 별 종류별로 테스트 데이터(i_를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타냄
+· 분류영역(countourf) = 분류 모델이 이루는 결정 영역을 색상으로 나타냄",
+4,8,"print(f""[SVM 분류 모델]\nx축 : {x_col} \ny축 : {y_col} \n색상 : {t_col}\n"")
+print(f""score(정확도) : {model_b.score(i_test, o_test)*100:.2f}%"")","모델 성능 평가하기
+· 정확도(score) = 모델이 테스트 데이터의 출력값을 맞힌 비율(1에 가까울수록 정확함)",
+4,9,"K = 22100  # @param {""type"":""slider"",""min"":3000,""max"":40000,""step"":50,""label"":""온도(K)""}
+Mv  = 4   # @param {""type"":""slider"",""min"":-15,""max"":15,""step"":1,""label"":""절대등급(Mv)""}
+
+new_point = np.array([[K, Mv]])
+new_star = model_b.predict(new_point)
+
+print(f""온도 {K}K, 절대등급 {Mv:.1f}일 때, 이 별은 '{new_star[0]}'으로 분류됩니다."")
+print(f""예측한 이유를 학습지에 작성해보세요."")","예측하고 설명하기
+· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.
+· 예측한 이유를 학습지(외부)에 작성해보자.",

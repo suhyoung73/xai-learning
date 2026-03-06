@@ -1,0 +1,179 @@
+/* ============================================================
+   data.js — 3·4·8차시 셀 콘텐츠 + 시뮬레이션 데이터
+   ============================================================ */
+
+// ─── 3차시: meat.csv 시뮬레이션 데이터 ───
+const MEAT_DATA = [
+  [8400, 2800], [9400, 2540], [7300, 2800], [11500, 2400], [8000, 2480],
+  [10800, 2680], [11600, 2480], [11600, 2480], [10400, 2680], [10300, 2480],
+  [9800, 2470], [8700, 1590], [8700, 2100], [8700, 1690], [8500, 2600],
+  [8000, 2200], [6000, 1300], [6200, 1400], [6200, 1300], [5800, 1500],
+  [6360, 1500], [4700, 1200], [5700, 1350], [5000, 1300], [4000, 1130],
+  [4000, 1100], [3350, 850], [3000, 1400], [1400, 1100], [4000, 1300],
+  [3800, 950], [3500, 850], [3000, 900], [3228, 996]
+];
+// train_test_split(test_size=0.2, random_state=42)
+const MEAT_TRAIN_IDX = [12, 32, 9, 0, 4, 16, 17, 5, 13, 11, 1, 2, 30, 3, 29, 23, 31, 22, 18, 25, 6, 20, 33, 7, 10, 14, 28];
+const MEAT_TEST_IDX = [15, 19, 27, 26, 8, 24, 21];
+const MEAT_MODEL = { w: 0.20, b: 399.73, score: 87.15 };
+
+function meatPredict(x) { return MEAT_MODEL.w * x + MEAT_MODEL.b; }
+function getMeatTrain() { return MEAT_TRAIN_IDX.map(i => MEAT_DATA[i]); }
+function getMeatTest() { return MEAT_TEST_IDX.map(i => MEAT_DATA[i]); }
+
+// ─── 4차시: star.csv 시뮬레이션 데이터 ───
+const STAR_TYPES = ['거성', '주계열성', '백색왜성'];
+const STAR_COLORS = ['#ef4444', '#3b82f6', '#a855f7'];
+
+const STAR_DATA = [{ "t": 3008.0, "mv": -6.0, "type": "거성" }, { "t": 3200.0, "mv": -7.22, "type": "거성" }, { "t": 3270.0, "mv": -6.02, "type": "거성" }, { "t": 3365.0, "mv": -6.2, "type": "거성" }, { "t": 3399.0, "mv": -10.92, "type": "거성" }, { "t": 3450.0, "mv": -11.75, "type": "거성" }, { "t": 3450.0, "mv": -11.28, "type": "거성" }, { "t": 3459.0, "mv": -10.7, "type": "거성" }, { "t": 3490.0, "mv": -9.4, "type": "거성" }, { "t": 3500.0, "mv": -8.18, "type": "거성" }, { "t": 3535.0, "mv": -11.36, "type": "거성" }, { "t": 3553.0, "mv": -11.03, "type": "거성" }, { "t": 3570.0, "mv": -7.58, "type": "거성" }, { "t": 3574.0, "mv": -5.24, "type": "거성" }, { "t": 3575.0, "mv": -6.78, "type": "거성" }, { "t": 3600.0, "mv": -6.6, "type": "거성" }, { "t": 3600.0, "mv": -7.89, "type": "거성" }, { "t": 3605.0, "mv": -10.81, "type": "거성" }, { "t": 3610.0, "mv": -10.86, "type": "거성" }, { "t": 3614.0, "mv": -7.71, "type": "거성" }, { "t": 3615.0, "mv": -11.33, "type": "거성" }, { "t": 3625.0, "mv": -6.74, "type": "거성" }, { "t": 3625.0, "mv": -10.25, "type": "거성" }, { "t": 3650.0, "mv": -7.79, "type": "거성" }, { "t": 3660.0, "mv": -11.92, "type": "거성" }, { "t": 3749.0, "mv": -8.05, "type": "거성" }, { "t": 3750.0, "mv": -7.63, "type": "거성" }, { "t": 3752.0, "mv": -11.24, "type": "거성" }, { "t": 3780.0, "mv": -10.7, "type": "거성" }, { "t": 3826.0, "mv": -6.93, "type": "거성" }, { "t": 3834.0, "mv": -9.2, "type": "거성" }, { "t": 4015.0, "mv": -11.39, "type": "거성" }, { "t": 4077.0, "mv": 6.228, "type": "주계열성" }, { "t": 4287.0, "mv": -9.2, "type": "거성" }, { "t": 4526.0, "mv": 6.506, "type": "주계열성" }, { "t": 4980.0, "mv": 4.78, "type": "주계열성" }, { "t": 5112.0, "mv": 4.68, "type": "주계열성" }, { "t": 5300.0, "mv": 5.49, "type": "주계열성" }, { "t": 5587.0, "mv": 5.03, "type": "주계열성" }, { "t": 5752.0, "mv": -6.63, "type": "거성" }, { "t": 5800.0, "mv": 5.05, "type": "주계열성" }, { "t": 5936.0, "mv": 4.46, "type": "주계열성" }, { "t": 6380.0, "mv": 2.93, "type": "주계열성" }, { "t": 6757.0, "mv": 2.41, "type": "주계열성" }, { "t": 6850.0, "mv": -10.07, "type": "거성" }, { "t": 7100.0, "mv": 14.09, "type": "백색왜성" }, { "t": 7220.0, "mv": 14.23, "type": "백색왜성" }, { "t": 7230.0, "mv": 14.08, "type": "백색왜성" }, { "t": 7282.0, "mv": -7.22, "type": "거성" }, { "t": 7700.0, "mv": 14.47, "type": "백색왜성" }, { "t": 7720.0, "mv": 2.44, "type": "주계열성" }, { "t": 7723.0, "mv": 14.81, "type": "백색왜성" }, { "t": 7740.0, "mv": 14.02, "type": "백색왜성" }, { "t": 8052.0, "mv": 2.42, "type": "주계열성" }, { "t": 8250.0, "mv": -0.98, "type": "주계열성" }, { "t": 8500.0, "mv": 14.5, "type": "백색왜성" }, { "t": 8570.0, "mv": 14.2, "type": "백색왜성" }, { "t": 8829.0, "mv": -10.73, "type": "거성" }, { "t": 8924.0, "mv": 14.87, "type": "백색왜성" }, { "t": 8927.0, "mv": -7.34, "type": "거성" }, { "t": 8930.0, "mv": 13.78, "type": "백색왜성" }, { "t": 8945.0, "mv": 0.12, "type": "주계열성" }, { "t": 9030.0, "mv": 1.45, "type": "주계열성" }, { "t": 9235.0, "mv": -11.23, "type": "거성" }, { "t": 9320.0, "mv": 1.236, "type": "주계열성" }, { "t": 9373.0, "mv": -5.99, "type": "거성" }, { "t": 9383.0, "mv": -6.98, "type": "거성" }, { "t": 9675.0, "mv": 13.98, "type": "백색왜성" }, { "t": 9700.0, "mv": 0.16, "type": "주계열성" }, { "t": 9892.0, "mv": -7.262, "type": "거성" }, { "t": 10012.0, "mv": 0.013, "type": "주계열성" }, { "t": 10574.0, "mv": 12.02, "type": "백색왜성" }, { "t": 10930.0, "mv": -6.224, "type": "거성" }, { "t": 10980.0, "mv": 11.19, "type": "백색왜성" }, { "t": 11000.0, "mv": -9.9, "type": "거성" }, { "t": 11096.0, "mv": -5.91, "type": "거성" }, { "t": 11250.0, "mv": -2.3, "type": "주계열성" }, { "t": 11567.0, "mv": -6.245, "type": "거성" }, { "t": 11790.0, "mv": 12.59, "type": "백색왜성" }, { "t": 11900.0, "mv": 11.38, "type": "백색왜성" }, { "t": 12010.0, "mv": 12.13, "type": "백색왜성" }, { "t": 12098.0, "mv": 0.02, "type": "주계열성" }, { "t": 12100.0, "mv": -7.84, "type": "거성" }, { "t": 12675.0, "mv": -5.62, "type": "거성" }, { "t": 12749.0, "mv": -7.02, "type": "거성" }, { "t": 12893.0, "mv": -6.34, "type": "거성" }, { "t": 12912.0, "mv": 12.83, "type": "백색왜성" }, { "t": 12984.0, "mv": 11.23, "type": "백색왜성" }, { "t": 12990.0, "mv": 12.23, "type": "백색왜성" }, { "t": 13023.0, "mv": -1.38, "type": "주계열성" }, { "t": 13089.0, "mv": -0.12, "type": "주계열성" }, { "t": 13340.0, "mv": 12.9, "type": "백색왜성" }, { "t": 13420.0, "mv": 13.67, "type": "백색왜성" }, { "t": 13720.0, "mv": 12.97, "type": "백색왜성" }, { "t": 14060.0, "mv": -2.04, "type": "주계열성" }, { "t": 14100.0, "mv": 12.17, "type": "백색왜성" }, { "t": 14245.0, "mv": -6.12, "type": "거성" }, { "t": 14520.0, "mv": 11.92, "type": "백색왜성" }, { "t": 14732.0, "mv": 12.89, "type": "백색왜성" }, { "t": 14982.0, "mv": 12.23, "type": "백색왜성" }, { "t": 15276.0, "mv": -1.97, "type": "주계열성" }, { "t": 15680.0, "mv": 11.92, "type": "백색왜성" }, { "t": 16390.0, "mv": -3.32, "type": "주계열성" }, { "t": 16500.0, "mv": 11.89, "type": "백색왜성" }, { "t": 16787.0, "mv": -6.35, "type": "거성" }, { "t": 16790.0, "mv": 12.87, "type": "백색왜성" }, { "t": 17120.0, "mv": -6.89, "type": "거성" }, { "t": 17140.0, "mv": -2.64, "type": "주계열성" }, { "t": 17200.0, "mv": 12.45, "type": "백색왜성" }, { "t": 17383.0, "mv": -6.09, "type": "거성" }, { "t": 17920.0, "mv": 11.66, "type": "백색왜성" }, { "t": 18000.0, "mv": -8.3, "type": "거성" }, { "t": 18290.0, "mv": 12.78, "type": "백색왜성" }, { "t": 18340.0, "mv": 11.22, "type": "백색왜성" }, { "t": 18734.0, "mv": -7.45, "type": "거성" }, { "t": 19360.0, "mv": 11.62, "type": "백색왜성" }, { "t": 19400.0, "mv": -3.08, "type": "주계열성" }, { "t": 19860.0, "mv": 11.34, "type": "백색왜성" }, { "t": 19920.0, "mv": 11.34, "type": "백색왜성" }, { "t": 19923.0, "mv": -5.69, "type": "거성" }, { "t": 20120.0, "mv": -3.4, "type": "주계열성" }, { "t": 21020.0, "mv": 11.52, "type": "백색왜성" }, { "t": 21738.0, "mv": -7.346, "type": "거성" }, { "t": 21904.0, "mv": -7.67, "type": "거성" }, { "t": 22012.0, "mv": -2.55, "type": "주계열성" }, { "t": 22350.0, "mv": -3.67, "type": "주계열성" }, { "t": 23000.0, "mv": -5.76, "type": "거성" }, { "t": 23092.0, "mv": 10.18, "type": "백색왜성" }, { "t": 23095.0, "mv": -5.905, "type": "거성" }, { "t": 23440.0, "mv": -5.975, "type": "거성" }, { "t": 23678.0, "mv": -6.27, "type": "거성" }, { "t": 24020.0, "mv": 10.55, "type": "백색왜성" }, { "t": 24145.0, "mv": -8.84, "type": "거성" }, { "t": 24345.0, "mv": -6.24, "type": "거성" }, { "t": 24490.0, "mv": -8.24, "type": "거성" }, { "t": 24630.0, "mv": -5.83, "type": "거성" }, { "t": 25000.0, "mv": 10.58, "type": "백색왜성" }, { "t": 25070.0, "mv": -3.98, "type": "주계열성" }, { "t": 25390.0, "mv": -5.92, "type": "거성" }, { "t": 26000.0, "mv": -9.1, "type": "거성" }, { "t": 26140.0, "mv": -3.8, "type": "주계열성" }, { "t": 26373.0, "mv": -5.83, "type": "거성" }, { "t": 27739.0, "mv": -7.59, "type": "거성" }, { "t": 28700.0, "mv": -4.09, "type": "주계열성" }, { "t": 29560.0, "mv": -4.01, "type": "주계열성" }, { "t": 30000.0, "mv": -4.2, "type": "주계열성" }, { "t": 30839.0, "mv": -10.63, "type": "거성" }, { "t": 32460.0, "mv": -4.36, "type": "주계열성" }, { "t": 32489.0, "mv": -10.84, "type": "거성" }, { "t": 33300.0, "mv": -6.5, "type": "거성" }, { "t": 33421.0, "mv": -5.79, "type": "거성" }, { "t": 33750.0, "mv": -6.1, "type": "거성" }, { "t": 34190.0, "mv": -4.57, "type": "주계열성" }, { "t": 36108.0, "mv": -4.4, "type": "주계열성" }, { "t": 37800.0, "mv": -4.56, "type": "주계열성" }, { "t": 37882.0, "mv": -7.8, "type": "거성" }, { "t": 38234.0, "mv": -9.29, "type": "거성" }, { "t": 38940.0, "mv": -9.93, "type": "거성" }, { "t": 39000.0, "mv": -4.7, "type": "주계열성" }, { "t": 40000.0, "mv": -6.23, "type": "거성" }];
+
+const STAR_TRAIN_IDX = [143, 67, 114, 11, 65, 85, 6, 27, 76, 139, 126, 41, 4, 135, 32, 127, 132, 68, 10, 95, 109, 0, 119, 111, 64, 44, 86, 28, 40, 112, 25, 23, 117, 79, 39, 93, 156, 155, 134, 47, 152, 61, 73, 33, 120, 118, 125, 62, 158, 148, 153, 53, 5, 149, 124, 49, 35, 80, 77, 34, 46, 7, 43, 70, 122, 110, 91, 83, 144, 145, 89, 8, 113, 13, 59, 137, 3, 17, 38, 72, 140, 133, 63, 54, 107, 50, 157, 58, 48, 88, 21, 57, 154, 129, 37, 150, 1, 52, 130, 103, 99, 116, 87, 74, 121, 159, 20, 71, 106, 14, 92, 102];
+const STAR_TEST_IDX = [105, 108, 141, 55, 94, 29, 101, 51, 100, 142, 19, 84, 15, 66, 24, 30, 128, 147, 98, 16, 75, 18, 12, 9, 31, 151, 97, 56, 131, 104, 136, 78, 60, 115, 2, 123, 45, 42, 69, 90, 26, 138, 82, 96, 146, 36, 81, 22];
+const STAR_MODEL = { score: 97.92 };
+
+function classifyStar(t, mv) {
+  if (mv < -5) return '거성';
+  if (t < 5500 && mv >= -5 && mv < 3) return '거성';
+  if (mv > 9 && t > 6500) return '백색왜성';
+  const mainSeqMv = -0.00045 * t + 14;
+  if (Math.abs(mv - mainSeqMv) < 3.5) return '주계열성';
+  if (mv > mainSeqMv) return '백색왜성';
+  return '주계열성';
+}
+function getStarTrain() { return STAR_TRAIN_IDX.filter(i => i < STAR_DATA.length).map(i => STAR_DATA[i]); }
+function getStarTest() { return STAR_TEST_IDX.filter(i => i < STAR_DATA.length).map(i => STAR_DATA[i]); }
+
+// ─── Lesson 정의 ───
+const LESSONS = {
+  3: {
+    title: '3차시: 회귀 모델 구현하기',
+    subtitle: '소고기·돼지고기 가격 데이터를 활용한 선형 회귀 분석',
+    cells: [
+      {
+        id: 1, title: '데이터 불러오기', stage: '데이터 수집',
+        pseudo: '데이터 불러오기\n· meat.csv 파일에서 읽어온 값을 data라는 변수에 저장함',
+        code: 'import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import train_test_split\n\ndata = pd.read_csv("/content/meat.csv")',
+        resultType: 'table'
+      },
+      {
+        id: 2, title: '열 선택하기', stage: '데이터 수집',
+        pseudo: '열 선택하기\n· 그래프의 x축으로 지정할 열 이름(x_col) = 소고기 가격 \n· 그래프의 y축으로 지정할 열 이름(y_col) = 돼지고기 가격 \n· 입력값(input) = data에서 x축에 해당하는 열에 저장된 값\n· 출력값(output) = data에서 y축에 해당하는 열에 저장된 값',
+        code: 'x_col = "소고기 가격"\ny_col = "돼지고기 가격"\n\ninput = data[[x_col]].values\noutput = data[y_col].values',
+        resultType: 'text'
+      },
+      {
+        id: 3, title: '데이터 시각화하기', stage: '데이터 전처리',
+        pseudo: '데이터 시각화하기\n· 산점도(scatter) = 입력값과 출력값의 쌍으로 이루어진 모든 데이터(input, output)를 점으로 나타낸 그래프',
+        code: 'plt.figure(figsize=(6,6))\nplt.xlabel(x_col)\nplt.ylabel(y_col)\n\nplt.scatter(input, output, alpha=0.6, label="데이터")\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawMeatScatter'
+      },
+      {
+        id: 4, title: '훈련 데이터와 테스트 데이터 분리하기', stage: '데이터 전처리',
+        pseudo: '훈련 데이터와 테스트 데이터 분리하기\n· 훈련 데이터(input, output) = (i_train , o_train) (80%)\n· 테스트 데이터(input, output) = (i_test , o_test) (20%)',
+        code: 'i_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.2, random_state=42)',
+        resultType: 'text'
+      },
+      {
+        id: 5, title: '모델 학습시키기', stage: '모델 학습',
+        pseudo: '모델 학습시키기\n· 모델 이름 = model_a \n· 모델 종류 = 선형 회귀(Linear Regression) \n· 모델을 학습(fit)시킬 데이터 = (i_train, o_train) ',
+        code: 'model_a = LinearRegression()\nmodel_a.fit(i_train, o_train)',
+        resultType: 'text'
+      },
+      {
+        id: 6, title: '훈련 데이터와 모델 시각화하기', stage: '모델 평가',
+        pseudo: '훈련 데이터와 모델 시각화하기\n· 산점도(scatter) = 입력값과 출력값의 쌍으로 이루어진 훈련 데이터(i_train, o_train)를 점으로 나타낸 그래프\n· 회귀선(plot) = 모델이 훈련 데이터를 학습해서 예측한 값들을 선으로 연결한 그래프',
+        code: 'x_grid = np.linspace(input.min(), input.max(), 100).reshape(-1, 1)\ny_line = model_a.predict(x_grid)\n\nplt.figure(figsize=(6,6))\nplt.xlabel(x_col)\nplt.ylabel(y_col)\n\nplt.scatter(i_train, o_train, alpha=0.6, label="훈련 데이터")\nplt.plot(x_grid, model_a.predict(x_grid), label="회귀 모델")\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawMeatTrainReg'
+      },
+      {
+        id: 7, title: '테스트 데이터와 모델 시각화하기', stage: '모델 평가',
+        pseudo: '테스트 데이터와 모델 시각화하기\n· 산점도(scatter) = 훈련 데이터(i_train, o_train)를 파란색 점, 테스트 데이터(i_test, o_test)를 주황색 점으로 나타낸 그래프\n· 회귀선(plot) = 모델이 훈련 데이터를 학습해서 예측한 값들을 선으로 연결한 그래프',
+        code: 'plt.figure(figsize=(6,6))\nplt.xlabel(x_col)\nplt.ylabel(y_col)\n\nplt.scatter(i_train, o_train, alpha=0.6, label="훈련 데이터")\nplt.scatter(i_test, o_test, alpha=0.8, label="테스트 데이터")\nplt.plot(x_grid, y_line, label="회귀 모델")\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawMeatTestReg'
+      },
+      {
+        id: 8, title: '모델로 데이터 예측하기', stage: '모델 평가',
+        pseudo: '모델로 데이터 예측하기\n· 테스트 데이터에 대한 모델의 예측값을 y_pred라는 변수에 저장함\n· 테스트 데이터의 입력값(i_test), 실제 출력값(o_test), 모델의 예측값(y_pred)을 표로 나타냄',
+        code: 'y_pred = model_a.predict(i_test)\ndf = pd.DataFrame({\'입력값\': i_test.flatten(), \'실제 출력값\': o_test, \'예측값\': y_pred.flatten()})\ndf',
+        resultType: 'predTable'
+      },
+      {
+        id: 9, title: '모델 성능 평가하기', stage: '모델 평가',
+        pseudo: '모델 성능 평가하기\n· 가중치, 기울기(weight) = 회귀선의 기울기, 입력값과 출력값이 영향을 미치는 정도\n· 편향, 절편(bias) = 회귀선의 y절편\n· 설명력(score) = 모델이 테스트 데이터(i_test, o_test)의 출력값 변화를 얼마나 잘 설명하는지 나타내는 값 → 1에 가까울수록 정확함',
+        code: 'print(f"[선형 회귀 모델]\\nx축 : {x_col} \\ny축 : {y_col}\\n")\nprint(f"w(가중치, 기울기): {model_a.coef_[0]:.2f}")\nprint(f"b(편향, 절편): {model_a.intercept_:.2f}")\nprint(f"score(설명력) : {model_a.score(i_test, o_test):.2f}%")',
+        resultType: 'metrics'
+      },
+      {
+        id: 10, title: '예측하고 설명하기', stage: '모델 활용',
+        pseudo: '예측하고 설명하기\n· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.\n· 예측한 이유를 학습지에 작성해보자.',
+        code: '소고기 = 10800 # @param {"type":"slider","min":2000,"max":12000,"step":200}\n돼지고기 = model_a.predict(np.array(소고기).reshape(-1, 1))\nprint(f"소고기 가격이 {소고기}원일 때, 돼지고기 가격은 {돼지고기[0]:.0f}원일 것으로 예측됩니다.")\nprint(f"예측한 이유를 학습지에 작성해보세요.")',
+        resultType: 'slider3'
+      }
+    ]
+  },
+  4: {
+    title: '4차시: 분류 모델 구현하기',
+    subtitle: '별 데이터를 활용한 SVM 분류 모델과 H-R 다이어그램',
+    cells: [
+      {
+        id: 1, title: '데이터 불러오기', stage: '데이터 수집',
+        pseudo: '데이터 불러오기\n· star.csv 파일에서 읽어온 값을 data라는 변수에 저장함',
+        code: 'import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.colors import ListedColormap\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.svm import SVC\nfrom sklearn.model_selection import train_test_split\n\ndata = pd.read_csv("/content/star.csv")',
+        resultType: 'starTable'
+      },
+      {
+        id: 2, title: '열 선택하기', stage: '데이터 수집',
+        pseudo: '열 선택하기\n· 그래프의 x축으로 지정할 열 이름(x_col) = 온도(K) \n· 그래프의 y축으로 지정할 열 이름(y_col) = 절대등급(Mv) \n· 그래프에서 색상으로 구분할 열 이름(t_col) = 별 종류 \n· 입력값(input) = data에서 x, y축에 해당하는 열에 저장된 값(values)\n· 출력값(output) = data에서 색상으로 표시되는 값(values)',
+        code: 'x_col = "온도(K)"\ny_col = "절대등급(Mv)"\nt_col = "별 종류"\n\ninput = data[[x_col, y_col]].to_numpy().astype(float)\noutput = data[t_col].astype(str).to_numpy()',
+        resultType: 'text'
+      },
+      {
+        id: 3, title: '데이터 시각화하기', stage: '데이터 전처리',
+        pseudo: '데이터 시각화하기\n· 출력값(output)에 들어 있는 별의 종류 목록(type_names)을 만들고 종류별 색상(colors)을 지정함\n· 산점도(scatter) = 별의 종류별로 데이터를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타낸 그래프\n· 실제 H-R도와 유사하게 x축과 y축을 반대로 표시함',
+        code: 'type_names = np.unique(output)\ncolors = plt.cm.tab10(np.linspace(0, 1, len(type_names)))\ncmap = ListedColormap(colors)\n\nplt.figure(figsize=(6,6))\n\nfor i, cls in enumerate(type_names):\n    m = (output == cls)\n    plt.scatter(input[m,0], input[m,1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=str(cls), alpha=0.95)\n\nplt.xlabel(x_col)\nplt.ylabel(y_col)\n\nax = plt.gca()\nax.invert_xaxis()\nax.invert_yaxis()\n\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawStarScatter'
+      },
+      {
+        id: 4, title: '훈련 데이터와 테스트 데이터 분리하기', stage: '데이터 전처리',
+        pseudo: '훈련 데이터와 테스트 데이터 분리하기\n· 훈련 데이터(input, output) = (i_train , o_train) (70%)\n· 테스트 데이터(input, output) = (i_test , o_test) (30%)',
+        code: 'i_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.3, random_state=42)',
+        resultType: 'text'
+      },
+      {
+        id: 5, title: '모델 학습시키기', stage: '모델 학습',
+        pseudo: '모델 학습시키기\n· 모델 이름 = model_b \n· 모델 종류 = 서포트 벡터 머신(SVC) \n· 모델을 학습(fit)시킬 데이터 = (i_train, o_train)',
+        code: 'model_b = make_pipeline(StandardScaler(),\n                        SVC(kernel="rbf", gamma="scale", C=2.0, random_state=42))\nmodel_b.fit(i_train, o_train)',
+        resultType: 'text'
+      },
+      {
+        id: 6, title: '훈련 데이터와 모델 시각화하기', stage: '모델 평가',
+        pseudo: '훈련 데이터와 모델 시각화하기\n· 좌표평면의 범위(min, max)를 정해서 격자(meshgrid)로 만듦\n· 산점도(scatter) = 별 종류별로 훈련 데이터를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타냄\n· 분류영역(countourf) = 분류 모델이 이루는 결정 영역을 색상으로 나타냄',
+        code: 'pad_x = (input[:,0].max() - input[:,0].min()) * 0.05\npad_y = (input[:,1].max() - input[:,1].min()) * 0.05\nx_min, x_max = input[:,0].min() - pad_x, input[:,0].max() + pad_x\ny_min, y_max = input[:,1].min() - pad_y, input[:,1].max() + pad_y\nxx, yy = np.meshgrid(np.linspace(x_min, x_max, 500),\n                     np.linspace(y_min, y_max, 500))\ngrid = np.c_[xx.ravel(), yy.ravel()]\nzz = model_b.predict(grid).reshape(xx.shape)\n\nlabel_map = {label: i for i, label in enumerate(type_names)}\nzz_int = np.array([label_map[label] for label in zz.ravel()]).reshape(xx.shape)\n\nplt.figure(figsize=(6,6))\nplt.contourf(xx, yy, zz_int, levels=len(type_names), alpha=0.20, cmap=cmap)\n\nfor i, cls in enumerate(type_names):\n    m_train = (o_train == cls)\n    plt.scatter(i_train[m_train, 0], i_train[m_train, 1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=cls, alpha=0.9)\n\nplt.xlabel(x_col)\nplt.ylabel(y_col)\n\nax = plt.gca()\nax.invert_xaxis()\nax.invert_yaxis()\n\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawStarTrainRegion'
+      },
+      {
+        id: 7, title: '테스트 데이터와 모델 시각화하기', stage: '모델 평가',
+        pseudo: '테스트 데이터와 모델 시각화하기\n· 산점도(scatter) = 별 종류별로 테스트 데이터를 찾아서 입력값(x, y축의 값)과 출력값(색상)을 점으로 나타냄\n· 분류영역(countourf) = 분류 모델이 이루는 결정 영역을 색상으로 나타냄',
+        code: 'pad_x = (input[:,0].max() - input[:,0].min()) * 0.05\npad_y = (input[:,1].max() - input[:,1].min()) * 0.05\nx_min, x_max = input[:,0].min() - pad_x, input[:,0].max() + pad_x\ny_min, y_max = input[:,1].min() - pad_y, input[:,1].max() + pad_y\n\nxx, yy = np.meshgrid(np.linspace(x_min, x_max, 500),\n                     np.linspace(y_min, y_max, 500))\ngrid = np.c_[xx.ravel(), yy.ravel()]\nzz = model_b.predict(grid).reshape(xx.shape)\n\nlabel_map = {label: i for i, label in enumerate(type_names)}\nzz_int = np.array([label_map[label] for label in zz.ravel()]).reshape(xx.shape)\n\nplt.figure(figsize=(6,6))\nplt.contourf(xx, yy, zz_int, levels=len(type_names), alpha=0.20, cmap=cmap)\n\n# 훈련 데이터\nfor i, cls in enumerate(type_names):\n    m_train = (o_train == cls)\n    plt.scatter(i_train[m_train, 0], i_train[m_train, 1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=f"훈련: {cls}", alpha=0.9)\n\n# 테스트 데이터\ny_pred = model_b.predict(i_test)\nfor i, cls in enumerate(type_names):\n    m_pred = (y_pred == cls)\n    plt.scatter(i_test[m_pred, 0], i_test[m_pred, 1],\n                s=36, color=colors[i],\n                edgecolor=\'red\', linewidth=1.2,\n                label=f"테스트: {cls}", alpha=0.95)\n\nplt.xlabel(x_col)\nplt.ylabel(y_col)\nax = plt.gca()\nax.invert_xaxis()\nax.invert_yaxis()\n\nplt.legend()\nplt.grid(True)\nplt.show()',
+        resultType: 'chart', chartFn: 'drawStarTestRegion'
+      },
+      {
+        id: 8, title: '모델 성능 평가하기', stage: '모델 평가',
+        pseudo: '모델 성능 평가하기\n· 정확도(score) = 모델이 테스트 데이터의 출력값을 맞힌 비율(1에 가까울수록 정확함)',
+        code: 'print(f"[SVM 분류 모델]\\nx축 : {x_col} \\ny축 : {y_col} \\n색상 : {t_col}\\n")\nprint(f"score(정확도) : {model_b.score(i_test, o_test):.2f}%")',
+        resultType: 'starMetrics'
+      },
+      {
+        id: 9, title: '예측하고 설명하기', stage: '모델 활용',
+        pseudo: '예측하고 설명하기\n· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.\n· 예측한 이유를 학습지에 작성해보자.',
+        code: 'K = 22100  # @param {"type":"slider","min":3000,"max":40000,"step":50,"label":"온도(K)"}\nMv  = 4   # @param {"type":"slider","min":-15,"max":15,"step":1,"label":"절대등급(Mv)"}\n\nnew_point = np.array([[K, Mv]])\nnew_star = model_b.predict(new_point)\n\nprint(f"온도 {K}K, 절대등급 {Mv:.1f}일 때, 이 별은 \'{new_star[0]}\'으로 분류됩니다.")\nprint(f"예측한 이유를 학습지에 작성해보세요.")',
+        resultType: 'slider4'
+      }
+    ]
+  },
+  8: {
+    title: '8차시: 설명 가능한 AI',
+    subtitle: '추후 콘텐츠가 추가될 예정입니다',
+    cells: []
+  }
+};
