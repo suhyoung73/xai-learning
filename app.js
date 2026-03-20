@@ -275,7 +275,7 @@
             '3-5': `<div class="result-text">✅ 선형 회귀 모델(<b>model_a</b>)이 학습을 완료했습니다.\n\n모델 종류: LinearRegression\n학습 데이터: ${MEAT_TRAIN_IDX.length}개의 훈련 데이터</div>`,
             '4-2': `<div class="result-mono">x_col = "온도(K)"\ny_col = "절대등급(Mv)"\nt_col = "별 종류"\n\n입력값(input): ${STAR_DATA.length}개의 (온도, 절대등급) 데이터\n출력값(output): ${STAR_DATA.length}개의 별 종류 데이터\n별 종류: ${STAR_TYPES.join(', ')}</div>`,
             '4-4': `<div class="result-text">✅ 데이터를 훈련/테스트 세트로 분리했습니다.\n\n📊 훈련 데이터: ${getStarTrain().length}개 (70%)\n📊 테스트 데이터: ${getStarTest().length}개 (30%)</div>`,
-            '4-5': `<div class="result-text">✅ SVM 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: Pipeline(StandardScaler → SVC)\n커널: rbf, C=2.0\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`
+            '4-5': `<div class="result-text">✅ SVM 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: 서포트 벡터 머신(SVC)\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`
         };
         const key = `${lessonNum}-${cellNum}`;
         c.innerHTML = texts[key] || '<div class="result-text">완료</div>';
@@ -304,11 +304,11 @@
     }
 
     function renderMetrics(c) {
-        c.innerHTML = `<div class="result-mono">[선형 회귀 모델]\nx축 : 소고기 가격\ny축 : 돼지고기 가격\n\nw(가중치, 기울기): ${MEAT_MODEL.w.toFixed(2)}\nb(편향, 절편): ${MEAT_MODEL.b.toFixed(2)}\nscore(설명력) : ${MEAT_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
+        c.innerHTML = `<div class="result-mono">[회귀 모델]\n입력값: 소고기 가격\n출력값: 돼지고기 가격\n\n가중치, 기울기(weight): ${MEAT_MODEL.w.toFixed(2)}\n편향, 절편(bias): ${MEAT_MODEL.b.toFixed(2)}\n설명력(score): ${MEAT_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
     }
 
     function renderStarMetrics(c) {
-        c.innerHTML = `<div class="result-mono">[SVM 분류 모델]\nx축 : 온도(K)\ny축 : 절대등급(Mv)\n색상 : 별 종류\n\nscore(정확도) : ${STAR_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
+        c.innerHTML = `<div class="result-mono">[SVM 분류 모델]\n입력값: 온도(K)\n출력값: 절대등급(Mv)\n색상: 별 종류\n\nscore(정확도): ${STAR_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
     }
 
     function renderSlider3(c) {
@@ -325,7 +325,7 @@
         <div class="prediction-box" id="pred3">
           소고기 가격이 10,800원일 때,<br>돼지고기 가격은 <b>${Math.round(meatPredict(10800)).toLocaleString()}원</b>일 것으로 예측됩니다.
         </div>
-        <div class="result-info">✏️ 예측한 이유를 학습지에 작성해보세요.</div>
+        <div class="result-info">✏️ 모델이 위와 같이 예측한 이유가 무엇일지 생각해보고, 학습지에 작성해보세요.</div>
       </div>`;
         const slider = c.querySelector('#sl3');
         slider.addEventListener('input', () => {
@@ -348,21 +348,21 @@
         </div>
         <div class="slider-group">
           <div class="slider-label"><span>⭐ 절대등급(Mv)</span><span class="slider-value" id="sv4m">${defMv}</span></div>
-          <input type="range" id="sl4m" min="-15" max="15" step="1" value="${defMv}" aria-label="절대등급 슬라이더">
+          <input type="range" id="sl4m" min="-15" max="15" step="0.5" value="${defMv}" aria-label="절대등급 슬라이더">
         </div>
         <div class="prediction-box" id="pred4">
-          온도 ${defK.toLocaleString()}K, 절대등급 ${defMv}일 때,<br>이 별은 '<b>${initResult}</b>'으로 분류됩니다.
+          온도 ${defK.toLocaleString()}K, 절대등급 ${defMv.toFixed(1)}일 때,<br>이 별은 '<b>${initResult}</b>'으로 분류됩니다.
         </div>
-        <div class="result-info">✏️ 예측한 이유를 학습지에 작성해보세요.</div>
+        <div class="result-info">✏️ 모델이 위와 같이 예측한 이유가 무엇일지 생각해보고, 학습지에 작성해보세요.</div>
       </div>`;
         const updatePred4 = () => {
             const k = parseInt(c.querySelector('#sl4k').value);
-            const mv = parseInt(c.querySelector('#sl4m').value);
+            const mv = parseFloat(c.querySelector('#sl4m').value);
             c.querySelector('#sv4k').textContent = k.toLocaleString() + 'K';
             c.querySelector('#sv4m').textContent = mv.toString();
             const res = classifyStar(k, mv);
             c.querySelector('#pred4').innerHTML =
-                `온도 ${k.toLocaleString()}K, 절대등급 ${mv}일 때,<br>이 별은 '<b>${res}</b>'으로 분류됩니다.`;
+                `온도 ${k.toLocaleString()}K, 절대등급 ${mv.toFixed(1)}일 때,<br>이 별은 '<b>${res}</b>'으로 분류됩니다.`;
         };
         c.querySelector('#sl4k').addEventListener('input', updatePred4);
         c.querySelector('#sl4m').addEventListener('input', updatePred4);
