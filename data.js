@@ -46,7 +46,7 @@ function getStarTest() { return STAR_TEST_IDX.filter(i => i < STAR_DATA.length).
 // ─── Lesson 정의 ───
 const LESSONS = {
   3: {
-    title: '3차시: 회귀 모델 구현하기',
+    title: '회귀 모델 구현하기',
     subtitle: '소고기·돼지고기 가격 데이터를 활용한 선형 회귀 분석',
     cells: [
       {
@@ -112,7 +112,7 @@ const LESSONS = {
     ]
   },
   4: {
-    title: '4차시: 분류 모델 구현하기',
+    title: '분류 모델 구현하기',
     subtitle: '별 데이터를 활용한 SVM 분류 모델과 H-R 다이어그램',
     cells: [
       {
@@ -172,7 +172,7 @@ const LESSONS = {
     ]
   },
   8: {
-    title: '8차시: 설명 가능한 AI',
+    title: '설명 가능한 AI',
     subtitle: '추후 콘텐츠가 추가될 예정입니다',
     cells: []
   }
