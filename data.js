@@ -100,7 +100,7 @@ const LESSONS = {
       {
         id: 9, title: '모델 성능 평가하기', stage: '모델 평가',
         pseudo: '· 가중치, 기울기(weight) = 회귀선의 기울기, 입력값과 출력값이 영향을 미치는 정도\n· 편향, 절편(bias) = 회귀선의 y절편\n· 설명력(score) = 모델이 테스트 데이터(i_test, o_test)의 출력값을 얼마나 잘 설명하는지 나타내는 값',
-        code: 'print(f"[회귀 모델]\\n입력값: {x_col} \\n출력값: {y_col}\\n")\nprint(f"가중치, 기울기(weight): {model_a.coef_[0]:.2f}")\nprint(f"편향, 절편(bias): {model_a.intercept_:.2f}")\nprint(f"설명력(score): {model_a.score(i_test, o_test):.2f}%")',
+        code: 'print(f"[회귀 모델]\\n입력값: {x_col} \\n출력값: {y_col}\\n")\nprint(f"가중치, 기울기(weight): {model_a.coef_[0]:.2f}")\nprint(f"편향, 절편(bias): {model_a.intercept_:.2f}")\nprint(f"설명력(score): {model_a.score(i_test, o_test):.4f}")',
         resultType: 'metrics'
       },
       {
@@ -160,7 +160,7 @@ const LESSONS = {
       {
         id: 8, title: '모델 성능 평가하기', stage: '모델 평가',
         pseudo: '· 정확도(score) = 모델이 테스트 데이터(i_test, o_test)의 출력값을 맞힌 비율',
-        code: 'print(f"[SVM 분류 모델]\\n입력값: {x_col} \\n출력값: {y_col} \\n색상: {t_col}\\n")\nprint(f"score(정확도): {model_b.score(i_test, o_test):.2f}%")',
+        code: 'print(f"[SVM 분류 모델]\\n입력값: {x_col, y_col} \\n출력값: {t_col}\\n")\nprint(f"score(정확도): {model_b.score(i_test, o_test):.4f}")',
         resultType: 'starMetrics'
       },
       {
