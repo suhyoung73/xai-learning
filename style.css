@@ -6,7 +6,7 @@
   --bg-card-hover: #f1f5f9;
   --bg-code: #f8fafc;
   --bg-header: rgba(255, 255, 255, 0.95);
-  --border-subtle: #cbd5e1;
+  --border-subtle: #94a3b8;
   --border-active: #818cf8;
   --accent: #4f46e5;
   --accent-light: #6366f1;
@@ -467,7 +467,7 @@ img {
   padding: 24px 16px;
   border-radius: var(--radius);
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 2px solid var(--border-subtle);
   transition: all var(--transition);
 }
 
@@ -571,8 +571,8 @@ img {
 /* ============ Cell Card ============ */
 .cell-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-left: 4px solid var(--text-muted);
+  border: 2px solid var(--border-subtle);
+  border-left: 6px solid var(--text-muted);
   border-radius: var(--radius);
   margin-bottom: 14px;
   transition: all var(--transition);
