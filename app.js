@@ -348,7 +348,7 @@
         </div>
         <div class="slider-group">
           <div class="slider-label"><span>⭐ 절대등급(Mv)</span><span class="slider-value" id="sv4m">${defMv}</span></div>
-          <input type="range" id="sl4m" min="-15" max="15" step="0.5" value="${defMv}" aria-label="절대등급 슬라이더">
+          <input type="range" id="sl4m" min="-15" max="15" step="0.1" value="${defMv}" aria-label="절대등급 슬라이더">
         </div>
         <div class="prediction-box" id="pred4">
           온도 ${defK.toLocaleString()}K, 절대등급 ${defMv.toFixed(1)}일 때,<br>이 별은 '<b>${initResult}</b>'으로 분류됩니다.
