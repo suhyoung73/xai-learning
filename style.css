@@ -1,25 +1,25 @@
 /* ============ CSS Custom Properties ============ */
 :root {
-  --bg-primary: #0a0e17;
-  --bg-secondary: #111827;
-  --bg-card: #1c2333;
-  --bg-card-hover: #232d42;
-  --bg-code: #0f172a;
-  --bg-header: rgba(10, 14, 23, 0.95);
-  --border-subtle: rgba(99, 102, 241, 0.15);
-  --border-active: rgba(99, 102, 241, 0.4);
-  --accent: #6366f1;
-  --accent-light: #818cf8;
-  --cyan: #22d3ee;
-  --green: #34d399;
-  --amber: #fbbf24;
-  --red: #f87171;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-code: #f8fafc;
+  --bg-header: rgba(255, 255, 255, 0.95);
+  --border-subtle: #cbd5e1;
+  --border-active: #818cf8;
+  --accent: #4f46e5;
+  --accent-light: #6366f1;
+  --cyan: #0891b2;
+  --green: #059669;
+  --amber: #d97706;
+  --red: #dc2626;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   --font-mono: 'Cascadia Code', 'Fira Code', 'Consolas', 'D2Coding', monospace;
@@ -44,7 +44,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
@@ -128,7 +128,7 @@ img {
 }
 
 .menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .hamburger,
@@ -290,7 +290,7 @@ img {
 }
 
 .sidebar-close:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .sidebar-nav ul {
@@ -605,7 +605,7 @@ img {
 }
 
 .cell-header:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .cell-number {
@@ -843,7 +843,7 @@ img {
 
 .data-table td {
   padding: 8px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   font-family: var(--font-mono);
   font-size: 0.82rem;
 }

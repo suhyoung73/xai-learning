@@ -3,8 +3,8 @@
    ============================================================ */
 
 const ChartColors = {
-    bg: '#0f172a', grid: 'rgba(148,163,184,0.12)',
-    axis: '#94a3b8', text: '#e2e8f0', textSub: '#94a3b8',
+    bg: '#ffffff', grid: 'rgba(0,0,0,0.1)',
+    axis: '#64748b', text: '#0f172a', textSub: '#64748b',
     blue: '#3b82f6', orange: '#f97316', green: '#22c55e',
     line: '#6366f1', lineShadow: 'rgba(99,102,241,0.3)'
 };
