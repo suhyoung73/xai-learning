@@ -304,11 +304,11 @@
     }
 
     function renderMetrics(c) {
-        c.innerHTML = `<div class="result-mono">[회귀 모델]\n입력값: 소고기 가격\n출력값: 돼지고기 가격\n\n가중치, 기울기(weight): ${MEAT_MODEL.w.toFixed(2)}\n편향, 절편(bias): ${MEAT_MODEL.b.toFixed(2)}\n설명력(score): ${MEAT_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
+        c.innerHTML = `<div class="result-mono">[회귀 모델]\n입력값: 소고기 가격\n출력값: 돼지고기 가격\n\n가중치, 기울기(weight): ${MEAT_MODEL.w.toFixed(2)}\n편향, 절편(bias): ${MEAT_MODEL.b.toFixed(2)}\n설명력(score): ${(MEAT_MODEL.score / 100).toFixed(2)}%</div>`.replace(/\n/g, '<br>');
     }
 
     function renderStarMetrics(c) {
-        c.innerHTML = `<div class="result-mono">[SVM 분류 모델]\n입력값: 온도(K)\n출력값: 절대등급(Mv)\n색상: 별 종류\n\nscore(정확도): ${STAR_MODEL.score.toFixed(2)}%</div>`.replace(/\n/g, '<br>');
+        c.innerHTML = `<div class="result-mono">[분류 모델]\n입력값: 온도(K), 절대등급(Mv)\n출력값: 별 종류\n\n정확도(score): ${(STAR_MODEL.score / 100).toFixed(2)}%</div>`.replace(/\n/g, '<br>');
     }
 
     function renderSlider3(c) {

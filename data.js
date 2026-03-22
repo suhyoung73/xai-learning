@@ -123,13 +123,13 @@ const LESSONS = {
       },
       {
         id: 2, title: '열 선택하기', stage: '데이터 수집',
-        pseudo: '· 그래프의 x축으로 지정할 열 이름(x_col) = 온도(K) \n· 그래프의 y축으로 지정할 열 이름(y_col) = 절대등급(Mv) \n· 그래프에서 색상으로 구분할 열 이름(t_col) = 별 종류 \n· 입력값(input) = data에서 x, y축에 해당하는 열(x_col, y_col)에 저장된 값\n· 출력값(output) = data에서 색상(t_col)으로 표시되는 값',
+        pseudo: '· 그래프의 x축으로 지정할 열 이름(x_col) = 온도(K) \n· 그래프의 y축으로 지정할 열 이름(y_col) = 절대등급(Mv) \n· 그래프에서 색상으로 구분할 열 이름(t_col) = 별 종류 \n\n· 입력값(input) = data에서 x, y축에 해당하는 열(x_col, y_col)에 저장된 값\n· 출력값(output) = data에서 색상(t_col)으로 표시되는 값',
         code: 'x_col = "온도(K)"\ny_col = "절대등급(Mv)"\nt_col = "별 종류"\n\ninput = data[[x_col, y_col]].to_numpy().astype(float)\noutput = data[t_col].astype(str).to_numpy()',
         resultType: 'text'
       },
       {
         id: 3, title: '데이터 시각화하기', stage: '데이터 전처리',
-        pseudo: '· 출력값(output)에 들어 있는 별의 종류 목록(type_names)을 만들고 종류별 색상(colors)을 지정함\n· 산점도(scatter) = 별 종류별(type_names)로 데이터를 찾아서 입력값과 출력값을 점으로 나타낸 그래프',
+        pseudo: '· 별의 종류 목록(type_names)을 만들고 종류별 색상(colors)을 지정함\n· 산점도(scatter) = 별 종류별(type_names)로 데이터를 찾아서 입력값과 출력값을 점으로 나타낸 그래프',
         code: 'type_names = np.unique(output)\ncolors = plt.cm.tab10(np.linspace(0, 1, len(type_names)))\n\nfor i, cls in enumerate(type_names):\n    m = (output == cls)\n    plt.scatter(input[m,0], input[m,1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=str(cls), alpha=0.95)',
         resultType: 'chart', chartFn: 'drawStarScatter'
       },
