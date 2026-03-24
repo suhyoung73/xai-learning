@@ -21,9 +21,8 @@ function initCanvas(container, w, h) {
     return { canvas, ctx, w, h };
 }
 
-function drawAxes(ctx, pad, w, h, xLabel, yLabel, xMin, xMax, yMin, yMax, invertX, invertY) {
+function drawAxes(ctx, pad, w, h, xLabel, yLabel, xMin, xMax, yMin, yMax, invertX, invertY, gx = 5, gy = 5) {
     ctx.strokeStyle = ChartColors.grid; ctx.lineWidth = 0.5;
-    const gx = 5, gy = 5;
     for (let i = 0; i <= gx; i++) {
         const x = pad + (w - 2 * pad) * i / gx;
         ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, h - pad); ctx.stroke();
@@ -70,13 +69,15 @@ function drawLegend(ctx, items, x, y) {
 function drawMeatScatter(container) {
     const W = 400, H = 400, P = 50;
     const { ctx } = initCanvas(container, W, H);
-    const xMin = 2500, xMax = 11500, yMin = 800, yMax = 2800;
+    const xMin = 2000, xMax = 12000, yMin = 1000, yMax = 2750;
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false);
+    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false, 5, 7);
     ctx.globalAlpha = 0.7;
     MEAT_DATA.forEach(d => {
-        const x = mapX(d[0], xMin, xMax, P, W, false);
-        const y = mapY(d[1], yMin, yMax, P, H, false);
+        let x = mapX(d[0], xMin, xMax, P, W, false);
+        let y = mapY(d[1], yMin, yMax, P, H, false);
+        x = Math.max(P, Math.min(W - P, x));
+        y = Math.max(P, Math.min(H - P, y));
         ctx.fillStyle = ChartColors.blue;
         ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
     });
@@ -85,6 +86,10 @@ function drawMeatScatter(container) {
 }
 
 function drawRegressionLine(ctx, xMin, xMax, yMin, yMax, P, W, H) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(P, P, W - 2 * P, H - 2 * P);
+    ctx.clip();
     ctx.strokeStyle = ChartColors.line; ctx.lineWidth = 2.5;
     ctx.shadowColor = ChartColors.lineShadow; ctx.shadowBlur = 8;
     ctx.beginPath();
@@ -96,19 +101,24 @@ function drawRegressionLine(ctx, xMin, xMax, yMin, yMax, P, W, H) {
         i === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
     }
     ctx.stroke(); ctx.shadowBlur = 0;
+    ctx.restore();
 }
 
 function drawMeatTrainReg(container) {
     const W = 400, H = 400, P = 50;
     const { ctx } = initCanvas(container, W, H);
-    const xMin = 2500, xMax = 11500, yMin = 800, yMax = 2800;
+    const xMin = 2000, xMax = 12000, yMin = 1000, yMax = 2750;
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false);
+    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false, 5, 7);
     const train = getMeatTrain();
     ctx.globalAlpha = 0.7;
     train.forEach(d => {
+        let x = mapX(d[0], xMin, xMax, P, W, false);
+        let y = mapY(d[1], yMin, yMax, P, H, false);
+        x = Math.max(P, Math.min(W - P, x));
+        y = Math.max(P, Math.min(H - P, y));
         ctx.fillStyle = ChartColors.blue;
-        ctx.beginPath(); ctx.arc(mapX(d[0], xMin, xMax, P, W, false), mapY(d[1], yMin, yMax, P, H, false), 5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
     });
     ctx.globalAlpha = 1;
     drawRegressionLine(ctx, xMin, xMax, yMin, yMax, P, W, H);
@@ -118,19 +128,27 @@ function drawMeatTrainReg(container) {
 function drawMeatTestReg(container) {
     const W = 400, H = 400, P = 50;
     const { ctx } = initCanvas(container, W, H);
-    const xMin = 2500, xMax = 11500, yMin = 800, yMax = 2800;
+    const xMin = 2000, xMax = 12000, yMin = 1000, yMax = 2750;
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false);
+    drawAxes(ctx, P, W, H, '소고기 가격', '돼지고기 가격', xMin, xMax, yMin, yMax, false, false, 5, 7);
     const train = getMeatTrain(), test = getMeatTest();
     ctx.globalAlpha = 0.6;
     train.forEach(d => {
+        let x = mapX(d[0], xMin, xMax, P, W, false);
+        let y = mapY(d[1], yMin, yMax, P, H, false);
+        x = Math.max(P, Math.min(W - P, x));
+        y = Math.max(P, Math.min(H - P, y));
         ctx.fillStyle = ChartColors.blue;
-        ctx.beginPath(); ctx.arc(mapX(d[0], xMin, xMax, P, W, false), mapY(d[1], yMin, yMax, P, H, false), 5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
     });
     ctx.globalAlpha = 0.9;
     test.forEach(d => {
+        let x = mapX(d[0], xMin, xMax, P, W, false);
+        let y = mapY(d[1], yMin, yMax, P, H, false);
+        x = Math.max(P, Math.min(W - P, x));
+        y = Math.max(P, Math.min(H - P, y));
         ctx.fillStyle = ChartColors.orange;
-        ctx.beginPath(); ctx.arc(mapX(d[0], xMin, xMax, P, W, false), mapY(d[1], yMin, yMax, P, H, false), 6, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
     });
     ctx.globalAlpha = 1;
     drawRegressionLine(ctx, xMin, xMax, yMin, yMax, P, W, H);
@@ -142,14 +160,16 @@ function drawMeatTestReg(container) {
 }
 
 // ─── 4차시 차트들 ───
-const STAR_X_MIN = 2000, STAR_X_MAX = 38000, STAR_Y_MIN = -15, STAR_Y_MAX = 16;
+const STAR_X_MIN = 5000, STAR_X_MAX = 40000, STAR_Y_MIN = -10, STAR_Y_MAX = 15;
 
 function drawStarPoints(ctx, data, P, W, H, pointSize, edgeColor) {
     data.forEach(d => {
         const ti = STAR_TYPES.indexOf(d.type);
         if (ti < 0) return;
-        const sx = mapX(d.t, STAR_X_MIN, STAR_X_MAX, P, W, true);
-        const sy = mapY(d.mv, STAR_Y_MIN, STAR_Y_MAX, P, H, true);
+        let sx = mapX(d.t, STAR_X_MIN, STAR_X_MAX, P, W, true);
+        let sy = mapY(d.mv, STAR_Y_MIN, STAR_Y_MAX, P, H, true);
+        sx = Math.max(P, Math.min(W - P, sx));
+        sy = Math.max(P, Math.min(H - P, sy));
         ctx.fillStyle = STAR_COLORS[ti];
         ctx.beginPath(); ctx.arc(sx, sy, pointSize, 0, Math.PI * 2); ctx.fill();
         if (edgeColor) {
@@ -180,7 +200,7 @@ function drawStarScatter(container) {
     const W = 420, H = 420, P = 55;
     const { ctx } = initCanvas(container, W, H);
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true);
+    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true, 7, 5);
     ctx.globalAlpha = 0.95;
     drawStarPoints(ctx, STAR_DATA, P, W, H, 5, '#000');
     ctx.globalAlpha = 1;
@@ -191,7 +211,7 @@ function drawStarTrainRegion(container) {
     const W = 420, H = 420, P = 55;
     const { ctx } = initCanvas(container, W, H);
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true);
+    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true, 7, 5);
     drawDecisionRegions(ctx, P, W, H);
     const train = getStarTrain();
     ctx.globalAlpha = 0.9;
@@ -204,7 +224,7 @@ function drawStarTestRegion(container) {
     const W = 420, H = 420, P = 55;
     const { ctx } = initCanvas(container, W, H);
     ctx.fillStyle = ChartColors.bg; ctx.fillRect(0, 0, W, H);
-    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true);
+    drawAxes(ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true, 7, 5);
     drawDecisionRegions(ctx, P, W, H);
     const train = getStarTrain(), test = getStarTest();
     ctx.globalAlpha = 0.7;
