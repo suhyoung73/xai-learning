@@ -155,13 +155,13 @@ const LESSONS = {
       },
       {
         id: 6, title: '훈련 데이터와 모델 시각화하기', stage: '모델 평가',
-        pseudo: '· 산점도(scatter) = 별 종류별(type_names)로 훈련 데이터를 찾아서 입력값과 출력값을 점으로 나타냄\n· 분류영역(countourf) = 분류 모델이 분류하기 위해 그린 결정 영역을 나타냄',
+        pseudo: '· 산점도(scatter) = 별 종류별(type_names)로 훈련 데이터를 찾아서 입력값과 출력값을 점으로 나타냄\n· 분류영역(contour) = 분류 모델이 분류하기 위해 그린 결정 영역을 나타냄',
         code: 'for i, cls in enumerate(type_names):\n    m = (o_train == cls)\n    plt.scatter(i_train[m, 0], i_train[m, 1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=cls, alpha=0.9)\n\nplt.contourf(x, y, z, levels=len(type_names), alpha=0.20, cmap=cmap)',
         resultType: 'chart', chartFn: 'drawStarTrainRegion'
       },
       {
         id: 7, title: '테스트 데이터와 모델 시각화하기', stage: '모델 평가',
-        pseudo: '· 산점도(scatter) = 별 종류별(type_names)로 훈련 데이터와 테스트 데이터를 찾아서 점으로 나타냄\n· 분류영역(countourf) = 분류 모델이 분류하기 위해 그린 결정 영역을 나타냄',
+        pseudo: '· 산점도(scatter) = 별 종류별(type_names)로 훈련 데이터와 테스트 데이터를 찾아서 점으로 나타냄\n· 분류영역(contour) = 분류 모델이 분류하기 위해 그린 결정 영역을 나타냄',
         code: '# 훈련 데이터\nfor i, cls in enumerate(type_names):\n    m = (o_train == cls)\n    plt.scatter(i_train[m, 0], i_train[m, 1],\n                s=36, color=colors[i],\n                edgecolor=\'k\', linewidth=0.3,\n                label=f"훈련: {cls}", alpha=0.9)\n\n# 테스트 데이터\ny_pred = model_b.predict(i_test)\nfor i, cls in enumerate(type_names):\n    m = (y_pred == cls)\n    plt.scatter(i_test[m, 0], i_test[m, 1],\n                s=36, color=colors[i],\n                edgecolor=\'red\', linewidth=1.2,\n                label=f"테스트: {cls}", alpha=0.95)\n\nplt.contourf(x, y, z, levels=len(type_names), alpha=0.20, cmap=cmap)',
         resultType: 'chart', chartFn: 'drawStarTestRegion'
       },
@@ -174,7 +174,7 @@ const LESSONS = {
       {
         id: 9, title: '예측하고 설명하기', stage: '모델 활용',
         pseudo: '· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.\n· 판단 근거를 학습지에 작성해보자.',
-        code: 'K = 22100  # @param {"type":"slider","min":3000,"max":40000,"step":50,"label":"온도(K)"}\nMv  = 4   # @param {"type":"slider","min":-15,"max":15,"step":0.5,"label":"절대등급(Mv)"}\n\nnew_point = np.array([[K, Mv]])\nnew_star = model_b.predict(new_point)\n\nprint(f"온도 {K}K, 절대등급 {Mv:.1f}일 때, 이 별은 \'{new_star[0]}\'으로 분류됩니다.")',
+        code: 'K = 22100  # @param {"type":"slider","min":3000,"max":40000,"step":50,"label":"온도(K)"}\nMv  = 4   # @param {"type":"slider","min":-15,"max":15,"step":0.1,"label":"절대등급(Mv)"}\n\nnew_point = np.array([[K, Mv]])\nnew_star = model_b.predict(new_point)\n\nprint(f"온도 {K}K, 절대등급 {Mv:.1f}일 때, 이 별은 \'{new_star[0]}\'으로 분류됩니다.")',
         resultType: 'slider4'
       }
     ]

@@ -49,7 +49,7 @@ with open("data.js", "r", encoding="utf-8") as f:
 text = re.sub(r"const __ML_GRID = .*?\}", grid_js.strip(), text, flags=re.DOTALL)
 
 # Replace the text code snippet for Mv slider step
-text = text.replace('step\\":0.5,\\"label\\":\\"절대등급', 'step\\":0.1,\\"label\\":\\"절대등급')
+text = text.replace('"step":0.5,"label":"절대등급', '"step":0.1,"label":"절대등급')
 
 with open("data.js", "w", encoding="utf-8") as f:
     f.write(text)
