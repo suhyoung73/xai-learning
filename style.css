@@ -1040,7 +1040,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--bg-code);
+  background: transparent;
   border-radius: var(--radius-sm);
   padding: 12px;
   overflow: hidden;
