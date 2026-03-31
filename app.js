@@ -412,7 +412,7 @@
         <div class="lime-layout">
             <div class="lime-chart-box" id="lime-chart-container"></div>
             <div class="lime-bars-box">
-                <div class="lime-title">📊 LIME 특성 중요도 (영향력)</div>
+                <div class="lime-title">📊 설명(LIME)</div>
                 <div class="lime-subtitle">막대가 길수록 해당 특성이 예측에 미친 영향이 큽니다.</div>
                 <div class="lime-bars" id="lime-bars"></div>
                 <div class="lime-legend">
