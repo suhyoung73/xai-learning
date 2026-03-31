@@ -97,7 +97,7 @@
         lesson.cells.forEach(cell => {
             const cellId = `lesson${num}-cell${cell.id}`;
             const isDirectionOnly = cell.title === '예측하고 확인하기' || cell.title === '예측하고 설명하기';
-            
+
             let pseudoHtml = isDirectionOnly
                 ? `<div class="direction-text">${escHTML(cell.pseudo).replace(/\n/g, '<br>')}</div>`
                 : `<div class="pseudocode-section">
@@ -278,9 +278,9 @@
             '3-5': `<div class="result-text">✅ 선형 회귀 모델(<b>model_a</b>)이 학습을 완료했습니다.\n\n모델 종류: LinearRegression\n학습 데이터: ${MEAT_TRAIN_IDX.length}개의 훈련 데이터</div>`,
             '4-2': `<div class="result-mono">x_col = "온도(K)"\ny_col = "절대등급(Mv)"\nt_col = "별 종류"\n\n입력값(input): ${STAR_DATA.length}개의 (온도, 절대등급) 데이터\n출력값(output): ${STAR_DATA.length}개의 별 종류 데이터\n별 종류: ${STAR_TYPES.join(', ')}</div>`,
             '4-4': `<div class="result-text">✅ 데이터를 훈련/테스트 세트로 분리했습니다.\n\n📊 훈련 데이터: ${getStarTrain().length}개 (70%)\n📊 테스트 데이터: ${getStarTest().length}개 (30%)</div>`,
-            '4-5': `<div class="result-text">✅ SVM 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: 서포트 벡터 머신(SVC)\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`,
-            '8-1': `<div class="result-text">✅ 모델(<b>model_b</b>)을 불러왔습니다.\n\n입력값: 온도(K), 절대등급(Mv)\n출력값: 별 종류\n모델 종류: 서포트벡터 머신(SVC)</div>`,
-            '8-2': `<div class="result-text">✅ 설명기(explainer) 설정이 완료되었습니다.\n\n이제 모델의 예측 결과와 함께 설명 그래프를 볼 수 있습니다.</div>`
+            '4-5': `<div class="result-text">✅ 서포트 벡터 머신 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: 서포트 벡터 머신(SVC)\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`,
+            '8-1': `<div class="result-text">✅ 모델(<b>model_b</b>)을 불러왔습니다.\n\n입력값: 온도(K), 절대등급(Mv)\n출력값: 별 종류\n모델 종류: 서포트 벡터 머신(SVC)</div>`,
+            '8-2': `<div class="result-text">✅ 설명기(<b>explainer</b>) 설정이 완료되었습니다.\n\n이제 모델의 예측 결과와 함께 설명 그래프를 볼 수 있습니다.</div>`
         };
         const key = `${lessonNum}-${cellNum}`;
         c.innerHTML = texts[key] || '<div class="result-text">완료</div>';

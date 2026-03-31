@@ -185,7 +185,7 @@ const LESSONS = {
     cells: [
       {
         id: 1, title: '모델 불러오기',
-        pseudo: '· 모델 이름 = model_b\n· 모델 종류 = 서포트벡터 머신(SVC)\n· 모델이 학습에 사용할 데이터 = star.csv에서 읽어온 입력값과 출력값의 쌍 = ((온도, 절대등급), 별 종류)',
+        pseudo: '· 모델 이름 = model_b\n· 모델 종류 = 서포트 벡터 머신(SVC)\n· 모델이 학습에 사용할 데이터 = star.csv에서 읽어온 입력값과 출력값의 쌍\n\t\t= ((온도, 절대등급), 별 종류)',
         code: 'data = pd.read_csv("/content/star.csv")\ninput = data[["온도(K)", "절대등급(Mv)"]].to_numpy().astype(float)\noutput = data["별 종류"].astype(str).to_numpy()\ni_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.3, random_state=42)\nmodel_b = make_pipeline(StandardScaler(),\n                        SVC(kernel="rbf", gamma="scale", C=2.0, random_state=42))\nmodel_b.fit(i_train, o_train)',
         resultType: 'text'
       },

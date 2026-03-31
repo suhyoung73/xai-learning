@@ -1,7 +1,7 @@
 /* ============================================================
    sw.js — Service Worker (Precache + Offline)
    ============================================================ */
-const CACHE_NAME = 'xai-lab-v4';
+const CACHE_NAME = 'xai-lab-v5';
 const PRECACHE_URLS = [
     './',
     './index.html',
