@@ -95,11 +95,16 @@
 
         let currentStage = '';
         lesson.cells.forEach(cell => {
-            if (cell.stage && cell.stage !== currentStage) {
-                currentStage = cell.stage;
-                html += `<div class="stage-label">📌 ${currentStage}</div>`;
-            }
             const cellId = `lesson${num}-cell${cell.id}`;
+            const isDirectionOnly = cell.title === '예측하고 확인하기' || cell.title === '예측하고 설명하기';
+            
+            let pseudoHtml = isDirectionOnly
+                ? `<div class="direction-text">${escHTML(cell.pseudo).replace(/\n/g, '<br>')}</div>`
+                : `<div class="pseudocode-section">
+            <div class="section-label">📝 의사코드</div>
+            <pre class="pseudocode">${escHTML(cell.pseudo)}</pre>
+          </div>`;
+
             html += `
       <div class="cell-card" id="${cellId}" data-lesson="${num}" data-cell="${cell.id}">
         <div class="cell-header" role="button" tabindex="0"
@@ -112,10 +117,7 @@
           <span class="cell-status-icon">▶ 실행</span>
         </div>
         <div class="cell-body ${state.codeVisible || state.cellCodeVisible.has(cellId) ? 'show-code' : ''}">
-          <div class="pseudocode-section">
-            <div class="section-label">📝 의사코드</div>
-            <pre class="pseudocode">${escHTML(cell.pseudo)}</pre>
-          </div>
+          ${pseudoHtml}
           <div class="python-section">
             <div class="section-label">🐍 파이썬 코드</div>
             <pre class="python-code">${escHTML(cell.code)}</pre>
@@ -244,6 +246,7 @@
             case 'starMetrics': renderStarMetrics(container); break;
             case 'slider3': renderSlider3(container); break;
             case 'slider4': renderSlider4(container); break;
+            case 'slider8': renderSlider8(container); break;
             default: container.innerHTML = '<div class="result-text">결과 없음</div>';
         }
     }
@@ -275,7 +278,9 @@
             '3-5': `<div class="result-text">✅ 선형 회귀 모델(<b>model_a</b>)이 학습을 완료했습니다.\n\n모델 종류: LinearRegression\n학습 데이터: ${MEAT_TRAIN_IDX.length}개의 훈련 데이터</div>`,
             '4-2': `<div class="result-mono">x_col = "온도(K)"\ny_col = "절대등급(Mv)"\nt_col = "별 종류"\n\n입력값(input): ${STAR_DATA.length}개의 (온도, 절대등급) 데이터\n출력값(output): ${STAR_DATA.length}개의 별 종류 데이터\n별 종류: ${STAR_TYPES.join(', ')}</div>`,
             '4-4': `<div class="result-text">✅ 데이터를 훈련/테스트 세트로 분리했습니다.\n\n📊 훈련 데이터: ${getStarTrain().length}개 (70%)\n📊 테스트 데이터: ${getStarTest().length}개 (30%)</div>`,
-            '4-5': `<div class="result-text">✅ SVM 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: 서포트 벡터 머신(SVC)\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`
+            '4-5': `<div class="result-text">✅ SVM 분류 모델(<b>model_b</b>)이 학습을 완료했습니다.\n\n모델 종류: 서포트 벡터 머신(SVC)\n학습 데이터: ${getStarTrain().length}개의 훈련 데이터</div>`,
+            '8-1': `<div class="result-text">✅ 모델(<b>model_b</b>)을 불러왔습니다.\n\n입력값: 온도(K), 절대등급(Mv)\n출력값: 별 종류\n모델 종류: 서포트벡터 머신(SVC)</div>`,
+            '8-2': `<div class="result-text">✅ 설명기(explainer) 설정이 완료되었습니다.\n\n이제 모델의 예측 결과와 함께 설명 그래프를 볼 수 있습니다.</div>`
         };
         const key = `${lessonNum}-${cellNum}`;
         c.innerHTML = texts[key] || '<div class="result-text">완료</div>';
@@ -368,6 +373,108 @@
         c.querySelector('#sl4m').addEventListener('input', updatePred4);
     }
 
+    function getPseudoLime(t, mv, predicted_class) {
+        let t_weight = 0;
+        let mv_weight = 0;
+        if (predicted_class === '거성') {
+            mv_weight = mv < 0 ? 0.75 : -0.25;
+            t_weight = t < 6000 ? 0.35 : (t > 20000 ? 0.25 : -0.15);
+        } else if (predicted_class === '백색왜성') {
+            mv_weight = mv > 5 ? 0.65 : -0.45;
+            t_weight = t > 8000 ? 0.55 : -0.35;
+        } else {
+            t_weight = t < 20000 ? 0.45 : -0.2;
+            mv_weight = mv > 0 ? 0.45 : -0.2;
+        }
+        t_weight += Math.sin(t / 123) * 0.05;
+        mv_weight += Math.cos(mv * 1.5) * 0.05;
+        return {
+            t_val: parseFloat((t_weight * 100).toFixed(1)),
+            mv_val: parseFloat((mv_weight * 100).toFixed(1))
+        };
+    }
+
+    function renderSlider8(c) {
+        const defK = 22100, defMv = 4;
+        c.innerHTML = `
+      <div class="interactive-section lime-interactive">
+        <div class="lime-inputs">
+            <div class="slider-group">
+            <div class="slider-label"><span>🌡️ 온도(K)</span><span class="slider-value" id="sv8k">${defK.toLocaleString()}K</span></div>
+            <input type="range" id="sl8k" min="3000" max="40000" step="50" value="${defK}" aria-label="온도 슬라이더">
+            </div>
+            <div class="slider-group">
+            <div class="slider-label"><span>⭐ 절대등급(Mv)</span><span class="slider-value" id="sv8m">${defMv}</span></div>
+            <input type="range" id="sl8m" min="-15" max="15" step="0.1" value="${defMv}" aria-label="절대등급 슬라이더">
+            </div>
+            <div class="prediction-box text-center" id="pred8"></div>
+        </div>
+        <div class="lime-layout">
+            <div class="lime-chart-box" id="lime-chart-container"></div>
+            <div class="lime-bars-box">
+                <div class="lime-title">📊 LIME 특성 중요도 (영향력)</div>
+                <div class="lime-subtitle">막대가 길수록 해당 특성이 예측에 미친 영향이 큽니다.</div>
+                <div class="lime-bars" id="lime-bars"></div>
+                <div class="lime-legend">
+                    <span class="legend-item"><span class="color-box positive"></span>예측값 지지(강화)</span>
+                    <span class="legend-item"><span class="color-box negative"></span>예측값 반대(약화)</span>
+                </div>
+            </div>
+        </div>
+      </div>`;
+
+        const chartBox = c.querySelector('#lime-chart-container');
+        const updateChartPoint = CHART_FNS.createStarLimeChart(chartBox);
+
+        const updatePred8 = () => {
+            const k = parseInt(c.querySelector('#sl8k').value);
+            const mv = parseFloat(c.querySelector('#sl8m').value);
+            c.querySelector('#sv8k').textContent = k.toLocaleString() + 'K';
+            c.querySelector('#sv8m').textContent = mv.toFixed(1);
+
+            const predictedClass = classifyStar(k, mv);
+
+            let predHtml = `온도 ${k.toLocaleString()}K, 절대등급 ${mv.toFixed(1)}Mv일 때, 이 별의 예측값은 <strong>${predictedClass}</strong>입니다.`;
+            if (typeof STAR_DATA !== 'undefined') {
+                const match = STAR_DATA.find(d => Math.abs(d.t - k) <= 5 && Math.abs(d.mv - mv) <= 0.5);
+                if (match) {
+                    predHtml += `<br>(온도 ${match.t.toFixed(0)}K, 절대등급 ${match.mv}Mv인 별의 실제값은 <strong>${match.type}</strong>입니다.)`;
+                }
+            }
+            c.querySelector('#pred8').innerHTML = predHtml;
+
+            updateChartPoint(k, mv, predictedClass);
+
+            const explanation = getPseudoLime(k, mv, predictedClass);
+            const barsHtml = [
+                { name: '온도(K)', val: explanation.t_val },
+                { name: '절대등급(Mv)', val: explanation.mv_val }
+            ].map(f => {
+                const isPos = f.val >= 0;
+                const absVal = Math.min(50, Math.abs(f.val) / 2);
+                const barClass = isPos ? 'positive' : 'negative';
+                return `
+                <div class="lime-feature">
+                    <div class="lime-f-name">${f.name}</div>
+                    <div class="lime-f-track">
+                        <div class="lime-f-center"></div>
+                        <div class="lime-f-bar ${barClass} ${isPos ? 'right' : 'left'}" style="width: ${absVal}%">
+                            <span class="lime-f-val ${isPos ? 'pos' : 'neg'}">${f.val > 0 ? '+' : ''}${f.val.toFixed(1)}</span>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            c.querySelector('#lime-bars').innerHTML = barsHtml;
+        };
+
+        c.querySelector('#sl8k').addEventListener('input', updatePred8);
+        c.querySelector('#sl8m').addEventListener('input', updatePred8);
+
+        // initial call
+        setTimeout(updatePred8, 10);
+    }
+
     // ─── Code Toggle ───
     function toggleCode() {
         state.codeVisible = !state.codeVisible;
@@ -443,7 +550,9 @@
 
     // ─── PWA Service Worker Registration ───
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => { });
+        navigator.serviceWorker.register('sw.js').then(reg => {
+            reg.update();
+        }).catch(() => { });
     }
 
     // ─── Utility ───

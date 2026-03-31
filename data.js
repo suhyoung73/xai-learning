@@ -180,8 +180,27 @@ const LESSONS = {
     ]
   },
   8: {
-    title: '설명 가능한 AI',
-    subtitle: '추후 콘텐츠가 추가될 예정입니다',
-    cells: []
+    title: '설명 가능한 인공지능 모델',
+    subtitle: 'LIME을 활용하여 별 분류 모델의 예측 결과 해석하기',
+    cells: [
+      {
+        id: 1, title: '모델 불러오기',
+        pseudo: '· 모델 이름 = model_b\n· 모델 종류 = 서포트벡터 머신(SVC)\n· 모델이 학습에 사용할 데이터 = star.csv에서 읽어온 입력값과 출력값의 쌍 = ((온도, 절대등급), 별 종류)',
+        code: 'data = pd.read_csv("/content/star.csv")\ninput = data[["온도(K)", "절대등급(Mv)"]].to_numpy().astype(float)\noutput = data["별 종류"].astype(str).to_numpy()\ni_train, i_test, o_train, o_test = train_test_split(input, output, test_size=0.3, random_state=42)\nmodel_b = make_pipeline(StandardScaler(),\n                        SVC(kernel="rbf", gamma="scale", C=2.0, random_state=42))\nmodel_b.fit(i_train, o_train)',
+        resultType: 'text'
+      },
+      {
+        id: 2, title: '설명 기능 추가하기',
+        pseudo: '· 모델에 설명 기능을 추가하기 위해 LIME을 설치함\n· 모델의 출력값(예측값)에 영향을 미친 특성을 설명하는 설명기(explainer)를 만듦\n    - 설명의 기준이 되는 데이터 = 훈련 데이터(train)\n    - 설명에 사용할 특성 = 데이터의 특성(feature)\n    - 초록색 막대로 표시되는 특성 = 예측값을 지지하는 특성\n    - 빨간색 막대로 표시되는 특성 = 예측값을 반대하는 특성',
+        code: 'from lime.lime_tabular import LimeTabularExplainer\n\nexplainer = LimeTabularExplainer(\n    training_data = i_train,\n    feature_names = ["온도(K)", "절대등급(Mv)"],\n    class_names = type_names,\n    mode = "classification"\n)',
+        resultType: 'text'
+      },
+      {
+        id: 3, title: '예측하고 설명하기',
+        pseudo: '· 슬라이더를 조절해서 가상의 데이터의 입력값에 대한 모델의 예측값을 확인해보자.\n· 판단 근거를 학습지에 작성해보자.',
+        code: 'K = 22100  # @param {"type":"slider","min":3000,"max":40000,"step":50,"label":"온도(K)"}\nMv  = 4   # @param {"type":"slider","min":-15,"max":15,"step":0.1,"label":"절대등급(Mv)"}\n\n# 입력 데이터 예측 및 설명 생성\nnew_point = np.array([[K, Mv]])\npred_class = model.predict(new_point)[0]\nexplanation = explainer.explain_instance(new_point[0], model.predict_proba)\n\n# 결과 및 설명 그래프 출력\nshow_prediction_and_lime_chart(pred_class, explanation)',
+        resultType: 'slider8'
+      }
+    ]
   }
 };

@@ -692,6 +692,14 @@ img {
   margin-top: 8px;
 }
 
+.direction-text {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 8px 16px;
+  margin-top: 8px;
+}
+
 .section-label {
   font-size: 0.72rem;
   font-weight: 700;
@@ -1001,4 +1009,179 @@ input[type="range"]::-webkit-slider-thumb {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
+}
+
+/* ============ LIME UI (Lesson 8) ============ */
+.lime-interactive {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.lime-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .lime-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.lime-chart-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-code);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  overflow: hidden;
+}
+
+.lime-bars-box {
+  flex: 1;
+  background: var(--bg-code);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lime-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.lime-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.lime-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.lime-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lime-f-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.lime-f-track {
+  position: relative;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.lime-f-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.lime-f-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  min-width: 40px; /* To fit the text */
+}
+
+/* Base colors for the bars */
+.lime-f-bar.positive {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.8);
+}
+
+.lime-f-bar.negative {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.8);
+}
+
+.lime-f-bar.right {
+  left: 50%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  justify-content: flex-end; /* Text on the right edge */
+}
+
+.lime-f-bar.left {
+  right: 50%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  justify-content: flex-start; /* Text on the left edge */
+}
+
+.lime-f-val {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: none !important;
+}
+
+.lime-f-val.pos { color: var(--green); }
+.lime-f-val.neg { color: var(--red); }
+
+.lime-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.color-box.positive {
+  background: rgba(16, 185, 129, 0.4);
+  border: 1px solid rgba(16, 185, 129, 0.8);
+}
+
+.color-box.negative {
+  background: rgba(239, 68, 68, 0.4);
+  border: 1px solid rgba(239, 68, 68, 0.8);
 }

@@ -238,8 +238,66 @@ function drawStarTestRegion(container) {
     drawLegend(ctx, items, P + 8, P + 10);
 }
 
+function createStarLimeChart(container) {
+    const W = 420, H = 420, P = 55;
+    
+    // Create base and overlay canvases
+    container.style.position = 'relative';
+    container.style.width = W + 'px';
+    container.style.height = H + 'px';
+    
+    // We mock a container to intercept appendChild and set absolute positioning.
+    const createLayer = () => {
+        let canvasElem;
+        const mockContainer = {
+            appendChild: c => {
+                c.style.position = 'absolute';
+                c.style.top = '0';
+                c.style.left = '0';
+                container.appendChild(c);
+                canvasElem = c;
+            }
+        };
+        const layer = initCanvas(mockContainer, W, H);
+        return layer;
+    };
+    
+    const base = createLayer();
+    const overlay = createLayer();
+    
+    // Static base
+    base.ctx.fillStyle = ChartColors.bg; base.ctx.fillRect(0, 0, W, H);
+    drawAxes(base.ctx, P, W, H, '온도(K)', '절대등급(Mv)', STAR_X_MIN, STAR_X_MAX, STAR_Y_MIN, STAR_Y_MAX, true, true, 7, 5);
+    drawDecisionRegions(base.ctx, P, W, H);
+    drawStarPoints(base.ctx, getStarTrain(), P, W, H, 3, null); // lighter points without borders
+    
+    // Update function
+    return function updatePoint(t, mv, predictedClass) {
+        overlay.ctx.clearRect(0, 0, W, H);
+        
+        let sx = mapX(t, STAR_X_MIN, STAR_X_MAX, P, W, true);
+        let sy = mapY(mv, STAR_Y_MIN, STAR_Y_MAX, P, H, true);
+        sx = Math.max(P, Math.min(W - P, sx));
+        sy = Math.max(P, Math.min(H - P, sy));
+        
+        const ti = STAR_TYPES.indexOf(predictedClass);
+        const color = ti >= 0 ? STAR_COLORS[ti] : '#ffffff';
+        
+        overlay.ctx.save();
+        overlay.ctx.shadowColor = 'rgba(0,0,0,0.6)';
+        overlay.ctx.shadowBlur = 8;
+        overlay.ctx.fillStyle = color;
+        overlay.ctx.beginPath(); overlay.ctx.arc(sx, sy, 8, 0, Math.PI * 2); overlay.ctx.fill();
+        overlay.ctx.shadowBlur = 0;
+        
+        overlay.ctx.strokeStyle = '#fff'; overlay.ctx.lineWidth = 2.5; overlay.ctx.stroke();
+        overlay.ctx.strokeStyle = '#000'; overlay.ctx.lineWidth = 1; overlay.ctx.stroke();
+        overlay.ctx.restore();
+    };
+}
+
 // Chart dispatcher
 const CHART_FNS = {
     drawMeatScatter, drawMeatTrainReg, drawMeatTestReg,
-    drawStarScatter, drawStarTrainRegion, drawStarTestRegion
+    drawStarScatter, drawStarTrainRegion, drawStarTestRegion, createStarLimeChart
 };
